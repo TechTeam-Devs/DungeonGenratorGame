@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public static class DungeonGenerator
+public static class GameAlgorithms
 {
     public static HashSet<Vector2Int> AgentBasedWalk(Vector2Int startPos, int walkDist)
     {

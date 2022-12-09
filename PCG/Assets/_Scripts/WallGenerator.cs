@@ -5,15 +5,15 @@ using UnityEngine;
 
 public static class WallGenerator 
 {
-    public static void createWalls(HashSet<Vector2Int> groundPos, TilemapDisplay tilemapDisplay)
+    public static void createWalls(HashSet<Vector2Int> groundPos, Graphics graphics)
     {
         var displayWall = wallDirection(groundPos, Direction.directionList);
         var cornerWall = wallDirection(groundPos, Direction.diagonalList);
-        CreateAllWalls(tilemapDisplay, displayWall, groundPos);
-        CreateCorners(tilemapDisplay, cornerWall, groundPos);
+        CreateAllWalls(graphics, displayWall, groundPos);
+        CreateCorners(graphics, cornerWall, groundPos);
     }
 
-    private static void CreateCorners(TilemapDisplay tilemapDisplay, HashSet<Vector2Int> cornerWall, HashSet<Vector2Int> groundPos)
+    private static void CreateCorners(Graphics graphics, HashSet<Vector2Int> cornerWall, HashSet<Vector2Int> groundPos)
     {
         foreach (var pos in cornerWall)
         {
@@ -30,11 +30,11 @@ public static class WallGenerator
                     binaryWalls += "0";
                 }
             }
-            tilemapDisplay.createSingleCornerWall(pos, binaryWalls);
+            graphics.createSingleCornerWall(pos, binaryWalls);
         }
     }
 
-    private static void CreateAllWalls(TilemapDisplay tilemapDisplay, HashSet<Vector2Int> displayWall, HashSet<Vector2Int> groundPos)
+    private static void CreateAllWalls(Graphics graphics, HashSet<Vector2Int> displayWall, HashSet<Vector2Int> groundPos)
     {
         foreach (var pos in displayWall)
         {
@@ -51,7 +51,7 @@ public static class WallGenerator
                     binaryWalls += "0";
                 }
             }
-            tilemapDisplay.createSingleWall(pos, binaryWalls);
+            graphics.createSingleWall(pos, binaryWalls);
         }
     }
 

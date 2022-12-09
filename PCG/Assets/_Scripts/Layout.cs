@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class DungeonStorage : MonoBehaviour
+public abstract class Layout : MonoBehaviour
 {
     [SerializeField]
-    protected TilemapDisplay tilemapDisplay = null;
-    //[SerializeField]
+    protected Graphics graphics = null;
+    
     protected Vector2Int startPos = new Vector2Int(0, 0);
+
+    protected abstract void RunMapGenerator();
 
     public void MapGenerator()
     {
-        tilemapDisplay.Clear();
+        graphics.Clear();
         RunMapGenerator();
     }
-
-    protected abstract void RunMapGenerator();
 }

@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(DungeonStorage), true)]
+[CustomEditor(typeof(Layout), true)]
 
-public class MapGeneratorEditor : Editor
+public class CreateDungeon : Editor
 {
-    DungeonStorage storage;
+    Layout layout;
 
     private void Awake()
     {
-        storage = (DungeonStorage)target;
+        layout = (Layout)target;
     }
 
     public override void OnInspectorGUI()
@@ -19,7 +19,7 @@ public class MapGeneratorEditor : Editor
         base.OnInspectorGUI();
         if(GUILayout.Button("Create Dungeon"))
         {
-            storage.MapGenerator();
+            layout.MapGenerator();
         }
     }
 }

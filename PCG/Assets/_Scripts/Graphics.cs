@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class TilemapDisplay : MonoBehaviour
+public class Graphics : MonoBehaviour
 {
     [SerializeField]
     private Tilemap groundTilemap;
@@ -16,20 +16,19 @@ public class TilemapDisplay : MonoBehaviour
     private TileBase groundTiles;
 
     [SerializeField]
-    private TileBase wallTop;
+    private TileBase corridor;
 
+    [SerializeField]
+    private TileBase wallTop;
 
     [SerializeField]
     private TileBase wallRight;
 
-
     [SerializeField]
     private TileBase wallLeft;
 
-
     [SerializeField]
     private TileBase wallBottom;
-
 
     [SerializeField]
     private TileBase wallMid;
@@ -40,10 +39,8 @@ public class TilemapDisplay : MonoBehaviour
     [SerializeField]
     private TileBase wallInnerCornerDownRight;
 
-
     [SerializeField]
     private TileBase wallDiagonalCornerDownRight;
-
 
     [SerializeField]
     private TileBase wallDiagonalCornerDownLeft;
@@ -57,6 +54,11 @@ public class TilemapDisplay : MonoBehaviour
     public void createGroundTiles(IEnumerable<Vector2Int> groundPos)
     {
         createTiles(groundPos, groundTilemap, groundTiles);
+    }
+
+    public void endOfCorridor(IEnumerable<Vector2Int> groundPos)
+    {
+        createTiles(groundPos, groundTilemap, corridor);
     }
 
     private void createTiles(IEnumerable<Vector2Int> tilePos, Tilemap tilemap, TileBase tiles)

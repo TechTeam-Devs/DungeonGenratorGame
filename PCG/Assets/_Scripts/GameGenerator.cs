@@ -5,17 +5,29 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using System.Linq;
 
-public class FirstRoomGenerator : DungeonStorage
+public class GameGenerator : Layout
 {
+    [SerializeField]
+    protected LevelOptions levelParameters;
+
+    private List<GameObject> gameObjects;
 
     protected override void RunMapGenerator()
     {
+        if(gameObjects.Count > 0) {
+            foreach (var gameobject in gameObjects)
+            {
+                Debug.Log(gameobject);
+                DestroyImmediate(gameobject);
+            }
+        }
+        
         CreateRooms();
     }
 
     private void CreateRooms()
     {
-        var list = DungeonGenerator.BinarySpacing(new BoundsInt((Vector3Int)startPos, new Vector3Int
+        var list = GameAlgorithms.BinarySpacing(new BoundsInt((Vector3Int)startPos, new Vector3Int
             (levelParameters.gameWidth, levelParameters.gameHeight, 0)), levelParameters.minRoomWidth, levelParameters.minRoomHeight);
 
         HashSet<Vector2Int> ground = new HashSet<Vector2Int>();
@@ -29,29 +41,38 @@ public class FirstRoomGenerator : DungeonStorage
             ground = CreateBinarySpacingRooms(list);
         }
 
-        //ground = CreateBinarySpacingRooms(list);
-
         List<Vector2Int> centerOfRoom = new List<Vector2Int>();
         foreach (var room in list)
         {
             centerOfRoom.Add((Vector2Int)Vector3Int.RoundToInt(room.center));
         }
-        //------------------------------------------//
+
+        List<Vector2Int> endOfCorridor = new List<Vector2Int>();
+        foreach (var room in list)
+        {
+            endOfCorridor.Add((Vector2Int)Vector3Int.RoundToInt(room.center));
+        }
+
         Vector2 playerStartPos = centerOfRoom[0];
         Vector2 goalStartPos = centerOfRoom.Last();
-
+        
         GameObject player = GameObject.Find("Player");
         player.transform.position = playerStartPos;
 
         GameObject goal = GameObject.Find("DummyGoal");
         goal.transform.position = goalStartPos;
-        //----------------------------Ovenst�ende bruger System.Linq �verst//
 
         HashSet<Vector2Int> corri = Connect(centerOfRoom);
         ground.UnionWith(corri);
 
-        tilemapDisplay.createGroundTiles(ground);
-        WallGenerator.createWalls(ground, tilemapDisplay);
+        Vector2 testPos = endOfCorridor.Last();
+
+        GameObject test = GameObject.Find("DummyTest");
+        test.transform.position = testPos;
+
+        graphics.createGroundTiles(ground);
+        graphics.endOfCorridor(corri);
+        WallGenerator.createWalls(ground, graphics);
     }
 
     private HashSet<Vector2Int> RoomRandomGen(List<BoundsInt> list)
@@ -122,7 +143,7 @@ public class FirstRoomGenerator : DungeonStorage
             {
                 pos += Vector2Int.down;
             }
-            corri.Add(pos);
+            corri.Add(pos);        
         }
         while (pos.x != closestRoom.x)
         {
@@ -136,6 +157,13 @@ public class FirstRoomGenerator : DungeonStorage
             }
             corri.Add(pos);
         }
+        List<Vector2Int> gameObjecttt = corri.ToList();
+        Vector2 position = gameObjecttt[0];
+        GameObject test = GameObject.Find("DummyTest");
+        GameObject clone = Instantiate(test, position, transform.rotation);
+        gameObjects.Add(clone);
+        //clone.transform.position = new Vector2(position, 0);
+        //test.transform.position = position + 0.5;
         return corri;
     }
 
@@ -156,24 +184,13 @@ public class FirstRoomGenerator : DungeonStorage
         return ground;
     }
 
-    [SerializeField]
-    protected LevelOptions levelParameters;
-
-    //protected override void RunMapGenerator()
-    //{
-    //    HashSet<Vector2Int> groundPos = RandomPath(levelParameters, startPos);
-    //    tilemapDisplay.Clear();
-    //    tilemapDisplay.createGroundTiles(groundPos);
-    //    WallGenerator.createWalls(groundPos, tilemapDisplay);
-    //}
-
     protected HashSet<Vector2Int> RandomPath(LevelOptions levelParameters, Vector2Int pos)
     {
         var currPos = pos;
         HashSet<Vector2Int> groundPos = new HashSet<Vector2Int>();
         for (int i = 0; i < levelParameters.iterations; i++)
         {
-            var path = DungeonGenerator.AgentBasedWalk(currPos, levelParameters.walkDist);
+            var path = GameAlgorithms.AgentBasedWalk(currPos, levelParameters.walkDist);
             groundPos.UnionWith(path);
             if (levelParameters.bendyRooms == true)
             {
