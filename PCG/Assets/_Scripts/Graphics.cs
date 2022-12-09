@@ -19,6 +19,9 @@ public class Graphics : MonoBehaviour
     private TileBase corridor;
 
     [SerializeField]
+    private TileBase corridorBlock;
+
+    [SerializeField]
     private TileBase wallTop;
 
     [SerializeField]
@@ -56,10 +59,11 @@ public class Graphics : MonoBehaviour
         createTiles(groundPos, groundTilemap, groundTiles);
     }
 
-    public void endOfCorridor(IEnumerable<Vector2Int> groundPos)
+    public void createBlock(IEnumerable<Vector2Int> blockPos)
     {
-        createTiles(groundPos, groundTilemap, corridor);
+        createTiles(blockPos, groundTilemap, groundTiles);
     }
+
 
     private void createTiles(IEnumerable<Vector2Int> tilePos, Tilemap tilemap, TileBase tiles)
     {
@@ -73,7 +77,7 @@ public class Graphics : MonoBehaviour
     {
         int IntType = Convert.ToInt32(Binary, 2);
         TileBase tile = null;
-        if (WallBytes.wallTop.Contains(IntType))
+        if(WallBytes.wallTop.Contains(IntType))
         {
             tile = wallTop;
         }
@@ -98,7 +102,6 @@ public class Graphics : MonoBehaviour
         if (tile!=null)
         {
             
-    
         createSingleTile(wallTilemap, tile, pos);
         }
     }
@@ -115,7 +118,22 @@ public class Graphics : MonoBehaviour
         wallTilemap.ClearAllTiles();
     }
 
-    internal void createSingleCornerWall(Vector2Int pos, string Binary)
+    internal void createCorridorBlock(Vector2Int pos, string Binary)
+    {
+        int IntType = Convert.ToInt32(Binary, 2);
+        TileBase tile = null;
+
+        if (WallBytes.corridorBlock.Contains(IntType))
+        {
+            tile = corridorBlock;
+            
+            GameObject test = GameObject.Find("DumDum");
+            GameObject clone = Instantiate(test, (Vector3Int)pos, transform.rotation);
+            Debug.Log("DET HER ER" + pos + corridorBlock);
+        }
+    }
+
+        internal void createSingleCornerWall(Vector2Int pos, string Binary)
     {
         int IntType = Convert.ToInt32(Binary, 2);
         TileBase tile = null;

@@ -20,6 +20,7 @@ public class GameGenerator : Layout
                 Debug.Log(gameobject);
                 DestroyImmediate(gameobject);
             }
+            gameObjects.Clear();
         }
         
         CreateRooms();
@@ -71,8 +72,9 @@ public class GameGenerator : Layout
         test.transform.position = testPos;
 
         graphics.createGroundTiles(ground);
-        graphics.endOfCorridor(corri);
         WallGenerator.createWalls(ground, graphics);
+        WallGenerator.createBlocks(ground, graphics);
+
     }
 
     private HashSet<Vector2Int> RoomRandomGen(List<BoundsInt> list)
@@ -162,8 +164,6 @@ public class GameGenerator : Layout
         GameObject test = GameObject.Find("DummyTest");
         GameObject clone = Instantiate(test, position, transform.rotation);
         gameObjects.Add(clone);
-        //clone.transform.position = new Vector2(position, 0);
-        //test.transform.position = position + 0.5;
         return corri;
     }
 

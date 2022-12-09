@@ -9,8 +9,16 @@ public static class WallGenerator
     {
         var displayWall = wallDirection(groundPos, Direction.directionList);
         var cornerWall = wallDirection(groundPos, Direction.diagonalList);
+        //var block = wallDirection(groundPos, Direction.diagonalList);
         CreateAllWalls(graphics, displayWall, groundPos);
         CreateCorners(graphics, cornerWall, groundPos);
+        //CreateBlocks(graphics, block, groundPos);
+    }
+
+    public static void createBlocks(HashSet<Vector2Int> groundPos, Graphics graphics)
+    { 
+        var block = wallDirection(groundPos, Direction.diagonalList);
+        CreateBlocks(graphics, block, groundPos);
     }
 
     private static void CreateCorners(Graphics graphics, HashSet<Vector2Int> cornerWall, HashSet<Vector2Int> groundPos)
@@ -34,7 +42,30 @@ public static class WallGenerator
         }
     }
 
-    private static void CreateAllWalls(Graphics graphics, HashSet<Vector2Int> displayWall, HashSet<Vector2Int> groundPos)
+    private static void CreateBlocks(Graphics graphics, HashSet<Vector2Int> block, HashSet<Vector2Int> groundPos)
+    {
+        foreach (var pos in block)
+        {
+            string binaryWalls = "";
+            foreach (var directions in Direction.allDirections)
+            {
+                var neigherborPos = pos + directions;
+                if (groundPos.Contains(neigherborPos))
+                {
+                    binaryWalls += "1";
+                    
+                }
+                else
+                {
+                    binaryWalls += "0";
+                 
+                }
+            }
+            graphics.createCorridorBlock(pos, binaryWalls);
+        }
+    }
+
+        private static void CreateAllWalls(Graphics graphics, HashSet<Vector2Int> displayWall, HashSet<Vector2Int> groundPos)
     {
         foreach (var pos in displayWall)
         {
