@@ -14,7 +14,7 @@ public class GameGenerator : Layout
 
     protected override void RunMapGenerator()
     {
-        if(gameObjects.Count > 0) {
+        if (gameObjects.Any()) {
             foreach (var gameobject in gameObjects)
             {
                 Debug.Log(gameobject);
@@ -22,7 +22,8 @@ public class GameGenerator : Layout
             }
             gameObjects.Clear();
         }
-        
+        graphics = FindObjectOfType(typeof(Graphics)) as Graphics;
+        graphics.ClearObjects();
         CreateRooms();
     }
 
@@ -54,22 +55,22 @@ public class GameGenerator : Layout
             endOfCorridor.Add((Vector2Int)Vector3Int.RoundToInt(room.center));
         }
 
-        Vector2 playerStartPos = centerOfRoom[0];
-        Vector2 goalStartPos = centerOfRoom.Last();
+        Vector2 playerStartPos = centerOfRoom.Last();
+        Vector2 goalStartPos = centerOfRoom[1];
         
-        GameObject player = GameObject.Find("Player");
+        GameObject player = GameObject.Find("PF Player");
         player.transform.position = playerStartPos;
 
-        GameObject goal = GameObject.Find("DummyGoal");
-        goal.transform.position = goalStartPos;
+        GameObject coffin = GameObject.Find("PF Props Stone Coffin V");
+        coffin.transform.position = goalStartPos;
 
         HashSet<Vector2Int> corri = Connect(centerOfRoom);
         ground.UnionWith(corri);
 
         Vector2 testPos = endOfCorridor.Last();
 
-        GameObject test = GameObject.Find("DummyTest");
-        test.transform.position = testPos;
+        //GameObject test = GameObject.Find("DummyTest");
+        //test.transform.position = testPos;
 
         graphics.createGroundTiles(ground);
         WallGenerator.createWalls(ground, graphics);
@@ -161,7 +162,7 @@ public class GameGenerator : Layout
         }
         List<Vector2Int> gameObjecttt = corri.ToList();
         Vector2 position = gameObjecttt[0];
-        GameObject test = GameObject.Find("DummyTest");
+        GameObject test = GameObject.Find("PF Props Stone Coffin V");
         GameObject clone = Instantiate(test, position, transform.rotation);
         gameObjects.Add(clone);
         return corri;
@@ -195,6 +196,7 @@ public class GameGenerator : Layout
             if (levelParameters.bendyRooms == true)
             {
                 currPos = groundPos.ElementAt(Random.Range(0, groundPos.Count));
+                
             }
         }
         return groundPos;

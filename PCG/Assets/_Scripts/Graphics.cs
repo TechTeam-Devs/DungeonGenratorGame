@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -54,6 +55,9 @@ public class Graphics : MonoBehaviour
     [SerializeField]
     private TileBase wallDiagonalCornerUpLeft;
 
+    private List<GameObject> Coffins;
+    private List<GameObject> Lanterns;
+
     public void createGroundTiles(IEnumerable<Vector2Int> groundPos)
     {
         createTiles(groundPos, groundTilemap, groundTiles);
@@ -64,7 +68,27 @@ public class Graphics : MonoBehaviour
         createTiles(blockPos, groundTilemap, groundTiles);
     }
 
+    public void ClearObjects()
+    {
+        if (Coffins.Count > 0 && Coffins.Any())
+        {
+            foreach (var gameobject in Coffins)
+            {
 
+                DestroyImmediate(gameobject);
+            }
+            Coffins.Clear();
+        }
+        //if (Lanterns.Count > 0 && Lanterns.Any())
+        //{
+        //    foreach (var gameobject in Lanterns)
+        //    {
+
+        //        DestroyImmediate(gameobject);
+        //    }
+        //    Lanterns.Clear();
+        //}
+    }
     private void createTiles(IEnumerable<Vector2Int> tilePos, Tilemap tilemap, TileBase tiles)
     {
         foreach (var pos in tilePos)
@@ -126,14 +150,14 @@ public class Graphics : MonoBehaviour
         if (WallBytes.corridorBlock.Contains(IntType))
         {
             tile = corridorBlock;
-            
-            GameObject test = GameObject.Find("DumDum");
-            GameObject clone = Instantiate(test, (Vector3Int)pos, transform.rotation);
-            Debug.Log("DET HER ER" + pos + corridorBlock);
+
+            GameObject lanterns = GameObject.Find("//PF Props Stone Lantern");
+            GameObject clone = Instantiate(lanterns, (Vector3Int)pos, transform.rotation);
+            //Debug.Log("DET HER ER" + pos + corridorBlock);
         }
     }
 
-        internal void createSingleCornerWall(Vector2Int pos, string Binary)
+    internal void createSingleCornerWall(Vector2Int pos, string Binary)
     {
         int IntType = Convert.ToInt32(Binary, 2);
         TileBase tile = null;
