@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -54,6 +55,7 @@ public class Graphics : MonoBehaviour
     [SerializeField]
     private TileBase wallDiagonalCornerUpLeft;
 
+    private List<GameObject> DumDumObjects;
     public void createGroundTiles(IEnumerable<Vector2Int> groundPos)
     {
         createTiles(groundPos, groundTilemap, groundTiles);
@@ -118,6 +120,21 @@ public class Graphics : MonoBehaviour
         wallTilemap.ClearAllTiles();
     }
 
+    public void ClearObjects()
+    {/*
+        if (DumDumObjects.Count > 0 && DumDumObjects.Any())
+        {
+            foreach (var gameobject in DumDumObjects)
+            {
+               
+                DestroyImmediate(gameobject);
+            }
+            DumDumObjects.Clear();
+        }
+      */
+        //DumDumObjects.Clear();
+    }
+
     internal void createCorridorBlock(Vector2Int pos, string Binary)
     {
         int IntType = Convert.ToInt32(Binary, 2);
@@ -126,10 +143,12 @@ public class Graphics : MonoBehaviour
         if (WallBytes.corridorBlock.Contains(IntType))
         {
             tile = corridorBlock;
-            
+            /*
             GameObject test = GameObject.Find("DumDum");
             GameObject clone = Instantiate(test, (Vector3Int)pos, transform.rotation);
+            DumDumObjects.Add(clone);
             Debug.Log("DET HER ER" + pos + corridorBlock);
+            */
         }
     }
 

@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e42912def2ff641d5aab78d77684d960, type: 3}
   m_Name: levelParameters_HugeDungeonTest 1
   m_EditorClassIdentifier: 
-  iterations: 3
+  iterations: 5
   walkDist: 1500
-  randomWalk: 1
+  minRoomWidth: 10
+  minRoomHeight: 10
+  gameWidth: 70
+  gameHeight: 70
+  spaceBetweenRooms: 5
+  bendyRooms: 1

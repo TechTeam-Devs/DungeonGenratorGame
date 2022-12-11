@@ -11,10 +11,36 @@ public class GameGenerator : Layout
     protected LevelOptions levelParameters;
 
     private List<GameObject> gameObjects;
+    //public Graphics graphics = new Graphics();
+    public void objectsToClone (List<GameObject> objects)
+    {
+         gameObjects.AddRange(objects);
+    }
+
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    public void OnBeforeSceneLoadRuntimeMethod()
+    {
+        Debug.Log("Before first Scene loaded");
+    }
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+    public void OnAfterSceneLoadRuntimeMethod()
+    {
+        Debug.Log("After first Scene loaded");
+    }
+
+    [RuntimeInitializeOnLoadMethod]
+    public void OnRuntimeMethodLoad()
+    {
+        RunMapGenerator();
+    }
+
+
 
     protected override void RunMapGenerator()
     {
-        if(gameObjects.Count > 0) {
+        if( /*gameObjects.Count() > 0 &&*/ 2+2 == 5) {
             foreach (var gameobject in gameObjects)
             {
                 Debug.Log(gameobject);
@@ -22,7 +48,13 @@ public class GameGenerator : Layout
             }
             gameObjects.Clear();
         }
-        
+        else
+        {
+            Debug.Log("Intet at slette");
+        }
+
+        graphics = FindObjectOfType(typeof(Graphics)) as Graphics;
+        graphics.ClearObjects();
         CreateRooms();
     }
 
@@ -66,17 +98,16 @@ public class GameGenerator : Layout
         HashSet<Vector2Int> corri = Connect(centerOfRoom);
         ground.UnionWith(corri);
 
-        Vector2 testPos = endOfCorridor.Last();
+        //Vector2 testPos = endOfCorridor.Last();
 
-        GameObject test = GameObject.Find("DummyTest");
-        test.transform.position = testPos;
+        //GameObject test = GameObject.Find("DummyTest");
+        //test.transform.position = testPos;
 
         graphics.createGroundTiles(ground);
         WallGenerator.createWalls(ground, graphics);
         WallGenerator.createBlocks(ground, graphics);
-
-    }
-
+  
+        }
     private HashSet<Vector2Int> RoomRandomGen(List<BoundsInt> list)
     {
         HashSet<Vector2Int> ground = new HashSet<Vector2Int>();
@@ -161,9 +192,9 @@ public class GameGenerator : Layout
         }
         List<Vector2Int> gameObjecttt = corri.ToList();
         Vector2 position = gameObjecttt[0];
-        GameObject test = GameObject.Find("DummyTest");
-        GameObject clone = Instantiate(test, position, transform.rotation);
-        gameObjects.Add(clone);
+       // GameObject test = GameObject.Find("DummyTest");
+       // GameObject clone = Instantiate(test, position, transform.rotation);
+       // gameObjects.Add(clone);
         return corri;
     }
 
