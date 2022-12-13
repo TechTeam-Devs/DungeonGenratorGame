@@ -11,6 +11,9 @@ public class Graphics : MonoBehaviour
     private Tilemap groundTilemap;
 
     [SerializeField]
+    private Tilemap blockTilemap;
+
+    [SerializeField]
     private Tilemap wallTilemap;
 
     [SerializeField]
@@ -61,12 +64,12 @@ public class Graphics : MonoBehaviour
         createTiles(groundPos, groundTilemap, groundTiles);
     }
 
-
+    /*
     public void createBlock(IEnumerable<Vector2Int> blockPos)
     {
-        createTiles(blockPos, groundTilemap, groundTiles);
+        createTiles(blockPos, blockTilemap, groundTiles);
     }
-
+    */
 
     private void createTiles(IEnumerable<Vector2Int> tilePos, Tilemap tilemap, TileBase tiles)
     {
