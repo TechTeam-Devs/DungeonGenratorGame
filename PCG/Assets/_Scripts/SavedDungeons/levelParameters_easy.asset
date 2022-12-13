@@ -16,8 +16,8 @@ MonoBehaviour:
   walkDist: 1
   minRoomWidth: 10
   minRoomHeight: 10
-  gameWidth: 70
-  gameHeight: 70
+  gameWidth: 40
+  gameHeight: 40
   spaceBetweenRooms: 2
-  totalMinutes: 0.1
-  bendyRooms: 1
+  totalMinutes: 10
+  bendyRooms: 0

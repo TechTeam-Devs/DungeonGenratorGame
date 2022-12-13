@@ -11,37 +11,41 @@ public class TimeCountdown : MonoBehaviour
     //protected LevelOptions levelParameters;
     public TMP_Text timeLeftTxt;
     float timeLeft;
+    float spawnTimer = 0f;
+    float repeatTime = 1f;
     bool isActive = true;
+
     [SerializeField]
     private float totalMinutes;
 
     
     // Start is called before the first frame update
     void Awake()
-    {/*
-        GameObject timer = GameObject.Find("GameGenerator");
-        LevelOptions leveloptions = timer.GetComponent<LevelOptions> ();
-        */
-
-        //timeLeft = levelParameters.totalMinutes*60;
+    {
         timeLeft = totalMinutes * 60;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isActive)
+        timeLeft = timeLeft -Time.deltaTime;
+
+        spawnTimer += Time.deltaTime;
+        if (spawnTimer >= repeatTime)
         {
-            timeLeft = timeLeft -Time.deltaTime;
-            if (timeLeft <= 0)
+            ObjectHandler.spawnRandomBlocks();
+            spawnTimer -= repeatTime;
+            Debug.Log(spawnTimer);
+        }
+
+        if (timeLeft <= 0)
             {
                 isActive = false;
                 SceneManager.LoadScene("Menu");
             }
-        }
 
         TimeSpan timeConvert = TimeSpan.FromSeconds(timeLeft);
-        timeLeftTxt.text = timeConvert.Minutes.ToString() + ":" + timeConvert.Seconds.ToString(); //Sørger for at tid bliver vist i min og sec
+        timeLeftTxt.text = timeConvert.Minutes.ToString() + ":" + timeConvert.Seconds.ToString(); //Sï¿½rger for at tid bliver vist i min og sec
     }
 
     public void TimerStart()

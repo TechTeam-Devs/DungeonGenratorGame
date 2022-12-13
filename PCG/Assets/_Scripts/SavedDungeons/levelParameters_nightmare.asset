@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e42912def2ff641d5aab78d77684d960, type: 3}
-  m_Name: levelParameters_Island
+  m_Name: levelParameters_nightmare
   m_EditorClassIdentifier: 
-  iterations: 100
-  walkDist: 20
-  minRoomWidth: 10
-  minRoomHeight: 10
-  gameWidth: 70
-  gameHeight: 70
-  spaceBetweenRooms: 2
-  totalMinutes: 1
+  iterations: 30
+  walkDist: 30
+  minRoomWidth: 5
+  minRoomHeight: 5
+  gameWidth: 100
+  gameHeight: 100
+  spaceBetweenRooms: 1
+  totalMinutes: 10
   bendyRooms: 1

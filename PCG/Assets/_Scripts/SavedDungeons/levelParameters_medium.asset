@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e42912def2ff641d5aab78d77684d960, type: 3}
-  m_Name: levelParameters_HugeDungeonTest 1
+  m_Name: levelParameters_medium
   m_EditorClassIdentifier: 
-  iterations: 5
-  walkDist: 1500
-  minRoomWidth: 10
-  minRoomHeight: 10
-  gameWidth: 70
-  gameHeight: 70
-  spaceBetweenRooms: 5
-  totalMinutes: 3
+  iterations: 70
+  walkDist: 20
+  minRoomWidth: 15
+  minRoomHeight: 15
+  gameWidth: 100
+  gameHeight: 100
+  spaceBetweenRooms: 1
+  totalMinutes: 0
   bendyRooms: 1

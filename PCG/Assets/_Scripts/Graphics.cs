@@ -20,9 +20,6 @@ public class Graphics : MonoBehaviour
     private TileBase groundTiles;
 
     [SerializeField]
-    private TileBase corridor;
-
-    [SerializeField]
     private TileBase corridorBlock;
 
     [SerializeField]
@@ -124,21 +121,6 @@ public class Graphics : MonoBehaviour
         wallTilemap.ClearAllTiles();
     }
 
-    public void ClearObjects()
-    {/*
-        if (DumDumObjects.Count > 0 && DumDumObjects.Any())
-        {
-            foreach (var gameobject in DumDumObjects)
-            {
-               
-                DestroyImmediate(gameobject);
-            }
-            DumDumObjects.Clear();
-        }
-      */
-        //DumDumObjects.Clear();
-    }
-
     internal void createCorridorBlock(Vector2Int pos, string Binary)
     {
         int IntType = Convert.ToInt32(Binary, 2);
@@ -148,11 +130,9 @@ public class Graphics : MonoBehaviour
         {
             tile = corridorBlock;
             
-            GameObject test = GameObject.Find("DumDum");
+            GameObject test = GameObject.Find("Blocks");
             GameObject clone = Instantiate(test, (Vector3Int)pos, transform.rotation);
-            //DumDumObjects.Add(clone); //skal nok ikke bruges
             ObjectHandler.add(clone);
-            //Debug.Log("DET HER ER" + pos + corridorBlock);
             createSingleTile(groundTilemap, tile, pos);
 
         }

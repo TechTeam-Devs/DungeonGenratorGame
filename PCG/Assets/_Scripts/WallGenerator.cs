@@ -3,16 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
+
 public static class WallGenerator 
 {
+
     public static void createWalls(HashSet<Vector2Int> groundPos, Graphics graphics)
     {
         var displayWall = wallDirection(groundPos, Direction.directionList);
         var cornerWall = wallDirection(groundPos, Direction.diagonalList);
-        //var block = wallDirection(groundPos, Direction.diagonalList);
+        
         CreateAllWalls(graphics, displayWall, groundPos);
         CreateCorners(graphics, cornerWall, groundPos);
-        //CreateBlocks(graphics, block, groundPos);
+        
     }
 
     public static void createBlocks(HashSet<Vector2Int> groundPos, Graphics graphics)
@@ -113,7 +115,7 @@ public static class WallGenerator
             {
                 var nextTo = pos + direction;
                 var randomizer = Random.Range(0, 100);
-                if (groundPos.Contains(nextTo) == true && randomizer < 10)
+                if (groundPos.Contains(nextTo) == true && randomizer < 75)
                 {
                     blockPos.Add(nextTo);
                 }

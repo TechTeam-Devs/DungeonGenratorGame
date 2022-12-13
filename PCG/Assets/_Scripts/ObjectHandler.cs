@@ -6,6 +6,16 @@ public static class ObjectHandler
 {
     static List<GameObject> gameObjects = new List<GameObject>();
 
+    public static int blockIndex = 0;
+
+    public static void spawnRandomBlocks()
+    {
+        int newBlock = Random.Range(0, gameObjects.Count);
+
+        gameObjects[newBlock].SetActive(!gameObjects[newBlock].activeSelf);
+
+    }
+
     public static void add(GameObject thing)
     {
         gameObjects.Add(thing);

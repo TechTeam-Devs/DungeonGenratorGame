@@ -10,50 +10,17 @@ public class GameGenerator : Layout
     [SerializeField]
     protected LevelOptions levelParameters;
 
-     List<GameObject> gameObjects = new List<GameObject>();
-    //public Graphics graphics = new Graphics();
+    //List<GameObject> gameObjects = new List<GameObject>();
 
-    /*
-    public void objectsToClone (List<GameObject> objects)
-    {
-         gameObjects.AddRange(objects);
-    }
-    */
     private void Awake()
     {
         Debug.Log("Gen is loaded");
         RunMapGenerator();
-       
     }
-
-
-
-
 
     protected override void RunMapGenerator()
     {
-       
-        /*
-        if( gameObjects.Count > 0 ) {
-            foreach (var gameobject in gameObjects)
-            {
-                Debug.Log(gameobject);
-                DestroyImmediate(gameobject);
-            }
-            gameObjects.Clear();
-        }
-        else
-        {
-            Debug.Log("Intet at slette");
-        }
-        */
-
-
-
-        //graphics = FindObjectOfType(typeof(Graphics)) as Graphics;
-        //graphics.ClearObjects();
-
-        gameObjects = ObjectHandler.deleteObjects();
+        //gameObjects = ObjectHandler.deleteObjects();
 
         graphics.Clear();
         CreateRooms();
@@ -93,24 +60,25 @@ public class GameGenerator : Layout
         GameObject player = GameObject.Find("PF Player");
         player.transform.position = playerStartPos;
 
-        GameObject goal = GameObject.Find("DummyGoal");
+        for (int i = 1; i < centerOfRoom.Count - 1; i++)
+        {
+            List<Vector2Int> enemyPos = centerOfRoom.ToList();
+            Vector2 position = enemyPos[i];
+            GameObject enemy = GameObject.Find("Enemy");
+            GameObject clone = Instantiate(enemy, position, transform.rotation);
+            
+        }
+
+        GameObject goal = GameObject.Find("Goal");
         goal.transform.position = goalStartPos;
 
         HashSet<Vector2Int> corri = Connect(centerOfRoom);
         ground.UnionWith(corri);
 
-        //Vector2 testPos = endOfCorridor.Last();
-
-        //GameObject test = GameObject.Find("DummyTest");
-        //test.transform.position = testPos;
-
         graphics.createGroundTiles(ground);
         WallGenerator.createWalls(ground, graphics);
         WallGenerator.createBlocks(ground, graphics);
-
-        //Debug.Log("Der er disse: " + gameObjects.Count);
-       
-       
+   
     }
     private HashSet<Vector2Int> RoomRandomGen(List<BoundsInt> list)
     {
@@ -195,11 +163,7 @@ public class GameGenerator : Layout
             }
             corri.Add(pos);
         }
-        List<Vector2Int> gameObjecttt = corri.ToList();
-        Vector2 position = gameObjecttt[0];
-        GameObject enemy = GameObject.Find("Enemy");
-        GameObject clone = Instantiate(enemy, position, transform.rotation);
-        gameObjects.Add(clone);
+
         return corri;
     }
 
