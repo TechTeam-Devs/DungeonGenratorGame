@@ -90,7 +90,7 @@ public class GameGenerator : Layout
         Vector2 playerStartPos = centerOfRoom[0];
         Vector2 goalStartPos = centerOfRoom.Last();
         
-        GameObject player = GameObject.Find("Player");
+        GameObject player = GameObject.Find("PF Player");
         player.transform.position = playerStartPos;
 
         GameObject goal = GameObject.Find("DummyGoal");
@@ -197,9 +197,9 @@ public class GameGenerator : Layout
         }
         List<Vector2Int> gameObjecttt = corri.ToList();
         Vector2 position = gameObjecttt[0];
-       // GameObject test = GameObject.Find("DummyTest");
-       // GameObject clone = Instantiate(test, position, transform.rotation);
-       // gameObjects.Add(clone);
+        GameObject enemy = GameObject.Find("Enemy");
+        GameObject clone = Instantiate(enemy, position, transform.rotation);
+        gameObjects.Add(clone);
         return corri;
     }
 
