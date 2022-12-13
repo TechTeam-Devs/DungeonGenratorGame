@@ -14,5 +14,14 @@ public class LevelOptions : ScriptableObject
     public int gameHeight = 70;
     public int spaceBetweenRooms = 2;
 
+
+    public float totalMinutes;
+
+
+    public void setTotalMinutes(float time)
+    {
+        totalMinutes = time;
+    }
+
     public bool bendyRooms = true;
 }

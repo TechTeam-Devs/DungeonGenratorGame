@@ -19,4 +19,5 @@ MonoBehaviour:
   gameWidth: 70
   gameHeight: 70
   spaceBetweenRooms: 2
+  totalMinutes: 0.1
   bendyRooms: 1

@@ -14,4 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iterations: 5
   walkDist: 5
-  randomWalk: 1
+  minRoomWidth: 10
+  minRoomHeight: 10
+  gameWidth: 70
+  gameHeight: 70
+  spaceBetweenRooms: 2
+  totalMinutes: 4
+  bendyRooms: 1

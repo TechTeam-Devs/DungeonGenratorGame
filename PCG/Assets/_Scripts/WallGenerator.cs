@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Random = UnityEngine.Random;
 public static class WallGenerator 
 {
     public static void createWalls(HashSet<Vector2Int> groundPos, Graphics graphics)
@@ -17,7 +17,7 @@ public static class WallGenerator
 
     public static void createBlocks(HashSet<Vector2Int> groundPos, Graphics graphics)
     { 
-        var block = wallDirection(groundPos, Direction.diagonalList);
+        var block = blockDirection(groundPos, Direction.diagonalList);
         CreateBlocks(graphics, block, groundPos);
     }
 
@@ -63,6 +63,7 @@ public static class WallGenerator
             }
             graphics.createCorridorBlock(pos, binaryWalls);
         }
+        ObjectHandler.get();
     }
 
         private static void CreateAllWalls(Graphics graphics, HashSet<Vector2Int> displayWall, HashSet<Vector2Int> groundPos)
@@ -101,5 +102,23 @@ public static class WallGenerator
             }
         }
         return wallPos;
+    }
+
+    private static HashSet<Vector2Int> blockDirection(HashSet<Vector2Int> groundPos, List<Vector2Int> directions)
+    {
+        HashSet<Vector2Int> blockPos = new HashSet<Vector2Int>();
+        foreach (var pos in groundPos)
+        {
+            foreach (var direction in directions)
+            {
+                var nextTo = pos + direction;
+                var randomizer = Random.Range(0, 100);
+                if (groundPos.Contains(nextTo) == true && randomizer < 10)
+                {
+                    blockPos.Add(nextTo);
+                }
+            }
+        }
+        return blockPos;
     }
 }

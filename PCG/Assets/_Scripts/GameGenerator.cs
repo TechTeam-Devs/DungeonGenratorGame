@@ -10,37 +10,31 @@ public class GameGenerator : Layout
     [SerializeField]
     protected LevelOptions levelParameters;
 
-    private List<GameObject> gameObjects;
+     List<GameObject> gameObjects = new List<GameObject>();
     //public Graphics graphics = new Graphics();
+
+    /*
     public void objectsToClone (List<GameObject> objects)
     {
          gameObjects.AddRange(objects);
     }
-
-
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    public void OnBeforeSceneLoadRuntimeMethod()
+    */
+    private void Awake()
     {
-        Debug.Log("Before first Scene loaded");
-    }
-
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-    public void OnAfterSceneLoadRuntimeMethod()
-    {
-        Debug.Log("After first Scene loaded");
-    }
-
-    [RuntimeInitializeOnLoadMethod]
-    public void OnRuntimeMethodLoad()
-    {
+        Debug.Log("Gen is loaded");
         RunMapGenerator();
+       
     }
+
+
 
 
 
     protected override void RunMapGenerator()
     {
-        if( /*gameObjects.Count() > 0 &&*/ 2+2 == 5) {
+       
+        /*
+        if( gameObjects.Count > 0 ) {
             foreach (var gameobject in gameObjects)
             {
                 Debug.Log(gameobject);
@@ -52,9 +46,16 @@ public class GameGenerator : Layout
         {
             Debug.Log("Intet at slette");
         }
+        */
 
-        graphics = FindObjectOfType(typeof(Graphics)) as Graphics;
-        graphics.ClearObjects();
+
+
+        //graphics = FindObjectOfType(typeof(Graphics)) as Graphics;
+        //graphics.ClearObjects();
+
+        gameObjects = ObjectHandler.deleteObjects();
+
+        graphics.Clear();
         CreateRooms();
     }
 
@@ -106,8 +107,11 @@ public class GameGenerator : Layout
         graphics.createGroundTiles(ground);
         WallGenerator.createWalls(ground, graphics);
         WallGenerator.createBlocks(ground, graphics);
-  
-        }
+
+        //Debug.Log("Der er disse: " + gameObjects.Count);
+       
+       
+    }
     private HashSet<Vector2Int> RoomRandomGen(List<BoundsInt> list)
     {
         HashSet<Vector2Int> ground = new HashSet<Vector2Int>();
@@ -125,6 +129,7 @@ public class GameGenerator : Layout
                 }
             }
         }
+
         return ground;
     }
 

@@ -61,6 +61,7 @@ public class Graphics : MonoBehaviour
         createTiles(groundPos, groundTilemap, groundTiles);
     }
 
+
     public void createBlock(IEnumerable<Vector2Int> blockPos)
     {
         createTiles(blockPos, groundTilemap, groundTiles);
@@ -143,13 +144,16 @@ public class Graphics : MonoBehaviour
         if (WallBytes.corridorBlock.Contains(IntType))
         {
             tile = corridorBlock;
-            /*
+            
             GameObject test = GameObject.Find("DumDum");
             GameObject clone = Instantiate(test, (Vector3Int)pos, transform.rotation);
-            DumDumObjects.Add(clone);
-            Debug.Log("DET HER ER" + pos + corridorBlock);
-            */
+            //DumDumObjects.Add(clone); //skal nok ikke bruges
+            ObjectHandler.add(clone);
+            //Debug.Log("DET HER ER" + pos + corridorBlock);
+            createSingleTile(groundTilemap, tile, pos);
+
         }
+        
     }
 
         internal void createSingleCornerWall(Vector2Int pos, string Binary)
