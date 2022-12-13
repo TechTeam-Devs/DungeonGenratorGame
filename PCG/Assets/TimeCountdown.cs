@@ -8,10 +8,12 @@ using UnityEngine.SceneManagement;
 
 public class TimeCountdown : MonoBehaviour
 {
-    protected LevelOptions levelParameters;
+    //protected LevelOptions levelParameters;
     public TMP_Text timeLeftTxt;
     float timeLeft;
     bool isActive = true;
+    [SerializeField]
+    private float totalMinutes;
 
     
     // Start is called before the first frame update
@@ -21,8 +23,8 @@ public class TimeCountdown : MonoBehaviour
         LevelOptions leveloptions = timer.GetComponent<LevelOptions> ();
         */
 
-        timeLeft = levelParameters.totalMinutes*60;
-        //timeLeft = levelParameters.totalMinutes * 60;
+        //timeLeft = levelParameters.totalMinutes*60;
+        timeLeft = totalMinutes * 60;
     }
 
     // Update is called once per frame
