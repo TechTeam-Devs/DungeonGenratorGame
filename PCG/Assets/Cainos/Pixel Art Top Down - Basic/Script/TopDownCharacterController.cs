@@ -8,12 +8,24 @@ namespace Cainos.PixelArtTopDown_Basic
     public class TopDownCharacterController : MonoBehaviour
     {
         public float speed;
+        public GameObject deathScreen;
+        public GameObject winScreen;
 
         private Animator animator;
+
+        public GameObject timerObject;
+        private TimeCountdown timeCountdown;
+        private bool gameWon;
+
+        private void Awake()
+        {
+            timeCountdown = timerObject.GetComponent<TimeCountdown>();
+        }
 
         private void Start()
         {
             animator = GetComponent<Animator>();
+            
         }
 
 
@@ -52,8 +64,29 @@ namespace Cainos.PixelArtTopDown_Basic
         {
             if (collision.gameObject.CompareTag("Goal"))
             {
-                SceneManager.LoadScene("Menu");
+                gameWon = true;
+
+
+                GameObject player = GameObject.Find("PF Player");
+                winScreen.SetActive(true);
+                player.SetActive(false);
+                timeCountdown.TimerStop(gameWon);
+            }
+
+            if (collision.gameObject.CompareTag("Enemy"))
+            {
+                gameWon = false;
+              
+              
+                GameObject player = GameObject.Find("PF Player");
+                deathScreen.SetActive(true);
+                player.SetActive(false);
+                timeCountdown.TimerStop(gameWon);
+
+
             }
         }
+
+        
     }
 }

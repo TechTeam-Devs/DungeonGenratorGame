@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Windows;
 using Input = UnityEngine.Input;
 
-public class PlayerControl : MonoBehaviour
+public class EnemyControl : MonoBehaviour
 {
 
     [SerializeField]
@@ -26,22 +26,10 @@ public class PlayerControl : MonoBehaviour
         maxY = transform.position.y + 2;
     }
 
-    void Update() //input
+    void Update() 
     {
         transform.position = new Vector3(Mathf.PingPong(Time.time * 1, maxX - minX) + minX, Mathf.PingPong(Time.time * 3, maxY - minY) + minY, transform.position.z);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        
-        //if (collision.gameObject.CompareTag("Goal"))
-        //{
-        //    Debug.Log("Entered goal");
-        //    trigger = true;
-        //}
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            SceneManager.LoadScene("Menu");
-        }
-    }
+
 }

@@ -14,5 +14,5 @@ public class LevelOptions : ScriptableObject
     public int gameHeight = 70;
     public int spaceBetweenRooms = 2;
 
-    public bool bendyRooms = true;
+    public bool dynamicRoomLayout = true;
 }

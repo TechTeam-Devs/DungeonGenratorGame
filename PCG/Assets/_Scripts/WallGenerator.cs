@@ -7,28 +7,28 @@ using Random = UnityEngine.Random;
 public static class WallGenerator 
 {
 
-    public static void createWalls(HashSet<Vector2Int> groundPos, Graphics graphics)
+    public static void CreateWalls(HashSet<Vector2Int> groundPos, Graphics graphics)
     {
-        var displayWall = wallDirection(groundPos, Direction.directionList);
-        var cornerWall = wallDirection(groundPos, Direction.diagonalList);
+        var mainWallPos = WallDirection(groundPos, Direction.directionList);
+        var cornerWallPos = WallDirection(groundPos, Direction.diagonalDirectionList);
         
-        CreateAllWalls(graphics, displayWall, groundPos);
-        CreateCorners(graphics, cornerWall, groundPos);
+        CreateMainWalls(graphics, mainWallPos, groundPos);
+        CreateCorners(graphics, cornerWallPos, groundPos);
         
     }
 
-    public static void createBlocks(HashSet<Vector2Int> groundPos, Graphics graphics)
+    public static void CreateBlocks(HashSet<Vector2Int> groundPos, Graphics graphics)
     { 
-        var block = blockDirection(groundPos, Direction.diagonalList);
-        CreateBlocks(graphics, block, groundPos);
+        var blockPos = blockDirection(groundPos, Direction.diagonalDirectionList);
+        CreateBlocks(graphics, blockPos, groundPos);
     }
 
-    private static void CreateCorners(Graphics graphics, HashSet<Vector2Int> cornerWall, HashSet<Vector2Int> groundPos)
+    private static void CreateCorners(Graphics graphics, HashSet<Vector2Int> cornerWallPos, HashSet<Vector2Int> groundPos)
     {
-        foreach (var pos in cornerWall)
+        foreach (var pos in cornerWallPos)
         {
             string binaryWalls = "";
-            foreach (var directions in Direction.allDirections)
+            foreach (var directions in Direction.allDirectionsList)
             {
                 var neigherborPos = pos + directions;
                 if (groundPos.Contains(neigherborPos))
@@ -40,56 +40,56 @@ public static class WallGenerator
                     binaryWalls += "0";
                 }
             }
-            graphics.createSingleCornerWall(pos, binaryWalls);
+            graphics.CreateSingleCornerWall(pos, binaryWalls);
         }
     }
 
-    private static void CreateBlocks(Graphics graphics, HashSet<Vector2Int> block, HashSet<Vector2Int> groundPos)
+    private static void CreateBlocks(Graphics graphics, HashSet<Vector2Int> blockPos, HashSet<Vector2Int> groundPos)
     {
-        foreach (var pos in block)
+        foreach (var pos in blockPos)
         {
-            string binaryWalls = "";
-            foreach (var directions in Direction.allDirections)
+            string binaryBlocks = "";
+            foreach (var directions in Direction.allDirectionsList)
             {
                 var neigherborPos = pos + directions;
                 if (groundPos.Contains(neigherborPos))
                 {
-                    binaryWalls += "1";
+                    binaryBlocks += "1";
                     
                 }
                 else
                 {
-                    binaryWalls += "0";
+                    binaryBlocks += "0";
                  
                 }
             }
-            graphics.createCorridorBlock(pos, binaryWalls);
+            graphics.CreateCorridorBlock(pos, binaryBlocks);
         }
-        ObjectHandler.get();
+        //ObjectHandler.get();
     }
 
-        private static void CreateAllWalls(Graphics graphics, HashSet<Vector2Int> displayWall, HashSet<Vector2Int> groundPos)
+        private static void CreateMainWalls(Graphics graphics, HashSet<Vector2Int> mainWallPos, HashSet<Vector2Int> groundPos)
     {
-        foreach (var pos in displayWall)
+        foreach (var pos in mainWallPos)
         {
-            string binaryWalls = "";
+            string binaryMainWalls = "";
             foreach (var direction in Direction.directionList)
             {
                 var neighborPos = pos + direction;
                 if (groundPos.Contains(neighborPos))
                 {
-                    binaryWalls += "1";
+                    binaryMainWalls += "1";
                 }
                 else
                 {
-                    binaryWalls += "0";
+                    binaryMainWalls += "0";
                 }
             }
-            graphics.createSingleWall(pos, binaryWalls);
+            graphics.CreateSingleWall(pos, binaryMainWalls);
         }
     }
 
-    private static HashSet<Vector2Int> wallDirection(HashSet<Vector2Int> groundPos, List<Vector2Int> directions)
+    private static HashSet<Vector2Int> WallDirection(HashSet<Vector2Int> groundPos, List<Vector2Int> directions)
     {
         HashSet<Vector2Int> wallPos = new HashSet<Vector2Int>();
         foreach (var pos in groundPos)

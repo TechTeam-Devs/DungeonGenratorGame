@@ -3132,6 +3132,7 @@ GameObject:
   - component: {fileID: 2146192535}
   - component: {fileID: 2146192534}
   - component: {fileID: 2146192533}
+  - component: {fileID: 2146192536}
   m_Layer: 5
   m_Name: ExitBtn
   m_TagString: Untagged
@@ -3204,7 +3205,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2146192536}
         m_TargetAssemblyTypeName: mainMenuHandler, Assembly-CSharp
         m_MethodName: exitGame
         m_Mode: 1
@@ -3254,3 +3255,15 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2146192531}
   m_CullTransparentMesh: 1
+--- !u!114 &2146192536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2146192531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72160db2a9110eb419d656994c2fdcbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

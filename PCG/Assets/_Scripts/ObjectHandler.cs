@@ -4,42 +4,46 @@ using UnityEngine;
 
 public static class ObjectHandler
 {
-    static List<GameObject> gameObjects = new List<GameObject>();
+    private static List<GameObject> blockList = new List<GameObject>();
+    private static List<GameObject> enemyList = new List<GameObject>();
 
-    public static int blockIndex = 0;
-
-    public static void spawnRandomBlocks()
+    public static void SpawnRandomBlocks()
     {
-        int newBlock = Random.Range(0, gameObjects.Count);
-
-        gameObjects[newBlock].SetActive(!gameObjects[newBlock].activeSelf);
-
-    }
-
-    public static void add(GameObject thing)
-    {
-        gameObjects.Add(thing);
-    }
-
-    public static void get()
-    {
-        foreach (var item in gameObjects)
+        if (blockList.Count == 0)
         {
-            Debug.Log(item);
+            return;
         }
-        Debug.Log(gameObjects.Count);
+        int newBlock = Random.Range(0, blockList.Count);
+
+        blockList[newBlock].SetActive(!blockList[newBlock].activeSelf);
+
+    }
+
+    public static void AddBlockToList(GameObject thing)
+    {
+        blockList.Add(thing);
+    }
+
+    public static void AddEnemyToList(GameObject thing)
+    {
+        enemyList.Add(thing);
     }
 
 
-    public static List<GameObject> deleteObjects()
+    public static void DeleteObjects()
     {
-        ObjectDestroyer game = new ObjectDestroyer();
-        if (gameObjects.Count > 0)
+        ObjectDestroyer objectDestroyer = new ObjectDestroyer();
+        if (blockList.Count > 0)
         {
-            game.deleteObject(gameObjects);
-            gameObjects.Clear();
+            objectDestroyer.DeleteObject(blockList);
+            blockList.Clear();
 
         }
-        return gameObjects;
+        if (enemyList.Count > 0)
+        {
+            objectDestroyer.DeleteObject(enemyList);
+            enemyList.Clear();
+        }
+       
     }
 }

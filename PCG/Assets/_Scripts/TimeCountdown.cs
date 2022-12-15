@@ -28,14 +28,18 @@ public class TimeCountdown : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+      
+        if (isActive)
+        { 
+
         timeLeft = timeLeft -Time.deltaTime;
 
         spawnTimer += Time.deltaTime;
         if (spawnTimer >= repeatTime)
         {
-            ObjectHandler.spawnRandomBlocks();
+            ObjectHandler.SpawnRandomBlocks();
             spawnTimer -= repeatTime;
-            Debug.Log(spawnTimer);
+           
         }
 
         if (timeLeft <= 0)
@@ -46,6 +50,7 @@ public class TimeCountdown : MonoBehaviour
 
         TimeSpan timeConvert = TimeSpan.FromSeconds(timeLeft);
         timeLeftTxt.text = timeConvert.Minutes.ToString() + ":" + timeConvert.Seconds.ToString(); //S�rger for at tid bliver vist i min og sec
+        }
     }
 
     public void TimerStart()
@@ -53,8 +58,17 @@ public class TimeCountdown : MonoBehaviour
         isActive = true;
     }
 
-    public void TimerStop()
+    public void TimerStop(bool gameWon)
     {
         isActive = false;
+        if (gameWon)
+        {
+            timeLeftTxt.color = Color.green;
+        }
+        else
+        {
+            timeLeftTxt.color = Color.red;
+        }
+        
     }
 }

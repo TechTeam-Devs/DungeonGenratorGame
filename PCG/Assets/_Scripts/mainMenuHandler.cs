@@ -18,6 +18,15 @@ public class mainMenuHandler : MonoBehaviour
         SceneManager.LoadScene("SceneNightmare"); //Loads our scene, "SampleScene" when this methods gets called
     }
 
+    public void loadMainMenu()
+    {
+        Scene scene = SceneManager.GetActiveScene();
+        if(scene != SceneManager.GetSceneByName("Menu"))
+            {
+            SceneManager.LoadScene("Menu");
+        }
+    }
+
     public void exitGame()
     {
         Application.Quit();

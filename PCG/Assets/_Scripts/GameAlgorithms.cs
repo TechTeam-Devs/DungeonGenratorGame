@@ -14,7 +14,7 @@ public static class GameAlgorithms
 
         for (int i = 0; i < walkDist; i++)
         {
-            var nextPos = prevPos + Direction.GetPath();
+            var nextPos = prevPos + Direction.GetRandomDirection();
             prevPos = nextPos;
             path.Add(nextPos);
         }
@@ -97,7 +97,7 @@ public static class Direction
         new Vector2Int (-1, 0) // Direction LEFT
     };
 
-    public static List<Vector2Int> diagonalList = new List<Vector2Int>
+    public static List<Vector2Int> diagonalDirectionList = new List<Vector2Int>
     {
         new Vector2Int (1, 1), // Direction UP-RIGHT
         new Vector2Int (1, -1), // Direction RIGHT-DOWN
@@ -105,7 +105,7 @@ public static class Direction
         new Vector2Int (-1, 1) // Direction LEFT-UP
     };
 
-    public static List<Vector2Int> allDirections = new List<Vector2Int>
+    public static List<Vector2Int> allDirectionsList = new List<Vector2Int>
     {
         new Vector2Int (0, 1), // Direction UP
         new Vector2Int (1, 1), // Direction UP-RIGHT
@@ -117,7 +117,7 @@ public static class Direction
         new Vector2Int (-1, 1) // Direction LEFT-UP
     };
 
-    public static Vector2Int GetPath()
+    public static Vector2Int GetRandomDirection()
     {
         return directionList[Random.Range(0, directionList.Count)];
     }

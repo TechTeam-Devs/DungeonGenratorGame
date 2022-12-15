@@ -19,5 +19,4 @@ MonoBehaviour:
   gameWidth: 100
   gameHeight: 100
   spaceBetweenRooms: 1
-  totalMinutes: 0
-  bendyRooms: 1
+  dynamicRoomLayout: 1

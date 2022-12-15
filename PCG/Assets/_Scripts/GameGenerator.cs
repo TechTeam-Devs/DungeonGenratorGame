@@ -7,49 +7,45 @@ using System.Linq;
 
 public class GameGenerator : Layout
 {
-    [SerializeField]
+   [SerializeField]
     protected LevelOptions levelParameters;
-
-    //List<GameObject> gameObjects = new List<GameObject>();
 
     private void Awake()
     {
-        Debug.Log("Gen is loaded");
         RunMapGenerator();
     }
 
     protected override void RunMapGenerator()
     {
-        //gameObjects = ObjectHandler.deleteObjects();
-
+        ObjectHandler.DeleteObjects();
         graphics.Clear();
         CreateRooms();
     }
 
     private void CreateRooms()
     {
-        var list = GameAlgorithms.BinarySpacing(new BoundsInt((Vector3Int)startPos, new Vector3Int
+        var listOfRooms = GameAlgorithms.BinarySpacing(new BoundsInt((Vector3Int)startPos, new Vector3Int
             (levelParameters.gameWidth, levelParameters.gameHeight, 0)), levelParameters.minRoomWidth, levelParameters.minRoomHeight);
 
         HashSet<Vector2Int> ground = new HashSet<Vector2Int>();
 
-        if (levelParameters.bendyRooms == true)
+        if (levelParameters.dynamicRoomLayout == true)
         {
-            ground = RoomRandomGen(list);
+            ground = DynamicRoomLayoutGen(listOfRooms);
         }
         else
         {
-            ground = CreateBinarySpacingRooms(list);
+            ground = BSPRoomLayoutGen(listOfRooms);
         }
 
         List<Vector2Int> centerOfRoom = new List<Vector2Int>();
-        foreach (var room in list)
+        foreach (var room in listOfRooms)
         {
             centerOfRoom.Add((Vector2Int)Vector3Int.RoundToInt(room.center));
         }
 
         List<Vector2Int> endOfCorridor = new List<Vector2Int>();
-        foreach (var room in list)
+        foreach (var room in listOfRooms)
         {
             endOfCorridor.Add((Vector2Int)Vector3Int.RoundToInt(room.center));
         }
@@ -65,22 +61,23 @@ public class GameGenerator : Layout
             List<Vector2Int> enemyPos = centerOfRoom.ToList();
             Vector2 position = enemyPos[i];
             GameObject enemy = GameObject.Find("Enemy");
-            GameObject clone = Instantiate(enemy, position, transform.rotation);
-            
+            GameObject enemyClone = Instantiate(enemy, position, transform.rotation);
+            ObjectHandler.AddEnemyToList(enemyClone);
+
         }
 
         GameObject goal = GameObject.Find("Goal");
         goal.transform.position = goalStartPos;
 
-        HashSet<Vector2Int> corri = Connect(centerOfRoom);
+        HashSet<Vector2Int> corri = RoomConnector(centerOfRoom);
         ground.UnionWith(corri);
 
-        graphics.createGroundTiles(ground);
-        WallGenerator.createWalls(ground, graphics);
-        WallGenerator.createBlocks(ground, graphics);
+        graphics.CreateGroundTiles(ground);
+        WallGenerator.CreateWalls(ground, graphics);
+        WallGenerator.CreateBlocks(ground, graphics);
    
     }
-    private HashSet<Vector2Int> RoomRandomGen(List<BoundsInt> list)
+    private HashSet<Vector2Int> DynamicRoomLayoutGen(List<BoundsInt> list)
     {
         HashSet<Vector2Int> ground = new HashSet<Vector2Int>();
         for (int i = 0; i < list.Count; i++)
@@ -101,7 +98,7 @@ public class GameGenerator : Layout
         return ground;
     }
 
-    private HashSet<Vector2Int> Connect(List<Vector2Int> centerOfRoom)
+    private HashSet<Vector2Int> RoomConnector(List<Vector2Int> centerOfRoom)
     {
         HashSet<Vector2Int> corri = new HashSet<Vector2Int>();
         var tempCenter = centerOfRoom[Random.Range(0, centerOfRoom.Count)];
@@ -167,7 +164,7 @@ public class GameGenerator : Layout
         return corri;
     }
 
-    private HashSet<Vector2Int> CreateBinarySpacingRooms(List<BoundsInt> list)
+    private HashSet<Vector2Int> BSPRoomLayoutGen(List<BoundsInt> list)
     {
         HashSet<Vector2Int> ground = new HashSet<Vector2Int>();
         foreach (var room in list)
@@ -192,7 +189,7 @@ public class GameGenerator : Layout
         {
             var path = GameAlgorithms.AgentBasedWalk(currPos, levelParameters.walkDist);
             groundPos.UnionWith(path);
-            if (levelParameters.bendyRooms == true)
+            if (levelParameters.dynamicRoomLayout == true)
             {
                 currPos = groundPos.ElementAt(Random.Range(0, groundPos.Count));
             }

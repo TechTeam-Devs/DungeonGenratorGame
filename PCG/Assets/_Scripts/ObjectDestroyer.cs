@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class ObjectDestroyer : MonoBehaviour
 {
-    public void deleteObject(List<GameObject> list)
+    public void DeleteObject(List<GameObject> ObjectList)
     {
-        foreach (var gameobject in list)
+        foreach (var gameObject in ObjectList)
         {
-            //Debug.Log(gameobject);
-            DestroyImmediate(gameobject);
+          
+            DestroyImmediate(gameObject);
 
         }
     }
