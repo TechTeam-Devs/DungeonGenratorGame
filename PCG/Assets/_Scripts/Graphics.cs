@@ -87,7 +87,7 @@ public class Graphics : MonoBehaviour
             tile = wallLeft;
         }
 
-        else if (WallBytes.wallBottm.Contains(BinaryType))
+        else if (WallBytes.wallBottom.Contains(BinaryType))
         {
             tile = wallBottom;
         }

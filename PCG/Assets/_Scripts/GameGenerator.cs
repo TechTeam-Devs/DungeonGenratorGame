@@ -74,7 +74,6 @@ public class GameGenerator : Layout
 
         graphics.CreateGroundTiles(ground);
         WallGenerator.CreateWalls(ground, graphics);
-        WallGenerator.CreateBlocks(ground, graphics);
    
     }
     private HashSet<Vector2Int> DynamicRoomLayoutGen(List<BoundsInt> list)
