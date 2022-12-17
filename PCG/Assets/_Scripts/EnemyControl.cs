@@ -30,6 +30,4 @@ public class EnemyControl : MonoBehaviour
     {
         transform.position = new Vector3(Mathf.PingPong(Time.time * 1, maxX - minX) + minX, Mathf.PingPong(Time.time * 3, maxY - minY) + minY, transform.position.z);
     }
-
-
 }

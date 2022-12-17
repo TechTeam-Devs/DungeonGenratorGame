@@ -4,24 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.WSA;
 
 public class Graphics : MonoBehaviour
 {
-    [SerializeField]
-    private Tilemap groundTilemap;
-
-    [SerializeField]
-    private Tilemap blockTilemap;
-
-    [SerializeField]
-    private Tilemap wallTilemap;
-
-    [SerializeField]
-    private TileBase groundTiles;
-
-    [SerializeField]
-    private TileBase corridorBlock;
-
     [SerializeField]
     private TileBase wallTop;
 
@@ -38,30 +24,43 @@ public class Graphics : MonoBehaviour
     private TileBase wallMid;
 
     [SerializeField]
-    private TileBase wallInnerCornerDownLeft;
+    private TileBase fillerWalls;
 
     [SerializeField]
-    private TileBase wallInnerCornerDownRight;
+    private Tilemap groundTilemap;
 
     [SerializeField]
-    private TileBase wallDiagonalCornerDownRight;
+    private Tilemap wallTilemap;
 
     [SerializeField]
-    private TileBase wallDiagonalCornerDownLeft;
+    private TileBase groundTiles;
 
     [SerializeField]
-    private TileBase wallDiagonalCornerUpRight;
+    private TileBase corridorBlock;
 
     [SerializeField]
-    private TileBase wallDiagonalCornerUpLeft;
+    private TileBase wallInnerCornerUpRight;
+
+    [SerializeField]
+    private TileBase wallInnerCornerUpLeft;
+
+    [SerializeField]
+    private TileBase wallOuterCornerDownRight;
+
+    [SerializeField]
+    private TileBase wallOuterCornerDownLeft;
+
+    [SerializeField]
+    private TileBase wallOuterCornerUpRight;
+
+    [SerializeField]
+    private TileBase wallOuterCornerUpLeft;
 
    
     public void CreateGroundTiles(IEnumerable<Vector2Int> groundPos)
     {
         CreateTiles(groundPos, groundTilemap, groundTiles);
     }
-
-
 
     private void CreateTiles(IEnumerable<Vector2Int> tilePos, Tilemap tilemap, TileBase tiles)
     {
@@ -93,9 +92,13 @@ public class Graphics : MonoBehaviour
             tile = wallBottom;
         }
 
-        else if (WallBytes.wallFull.Contains(BinaryType))
+        else if (WallBytes.wallMid.Contains(BinaryType))
         {
             tile = wallMid;
+        }
+        else if (WallBytes.fillerWalls.Contains(BinaryType))
+        {
+            tile = fillerWalls;
         }
         if (tile!=null)
         {
@@ -119,69 +122,51 @@ public class Graphics : MonoBehaviour
     internal void CreateCorridorBlock(Vector2Int pos, string Binary)
     {
         int BinaryType = Convert.ToInt32(Binary, 2);
-      
 
         if (WallBytes.corridorBlock.Contains(BinaryType))
         {
-           
-            
             GameObject test = GameObject.Find("Blocks");
             GameObject clone = Instantiate(test, (Vector3Int)pos, transform.rotation);
             ObjectHandler.AddBlockToList(clone);
-            
-
         }
-        
     }
 
-        internal void CreateSingleCornerWall(Vector2Int pos, string Binary)
+    internal void CreateSingleCornerWall(Vector2Int pos, string Binary)
     {
         int BinaryType = Convert.ToInt32(Binary, 2);
         TileBase tile = null;
 
-        if(WallBytes.wallInnerCornerDownLeft.Contains(BinaryType))
+        if(WallBytes.wallInnerCornerUpRight.Contains(BinaryType))
         {
-            tile = wallInnerCornerDownLeft;
+            tile = wallInnerCornerUpRight;
         }
-        else if (WallBytes.wallInnerCornerDownRight.Contains(BinaryType))
+        else if (WallBytes.wallInnerCornerUpLeft.Contains(BinaryType))
         {
-            tile = wallInnerCornerDownRight;
-        }
-
-        else if (WallBytes.wallDiagonalCornerDownLeft.Contains(BinaryType))
-        {
-            tile = wallDiagonalCornerDownLeft;
+            tile = wallInnerCornerUpLeft;
         }
 
-        else if (WallBytes.wallDiagonalCornerDownRight.Contains(BinaryType))
+        else if (WallBytes.wallOuterCornerDownLeft.Contains(BinaryType))
         {
-            tile = wallDiagonalCornerDownRight;
+            tile = wallOuterCornerDownLeft;
         }
 
-        else if (WallBytes.wallDiagonalCornerUpRight.Contains(BinaryType))
+        else if (WallBytes.wallOuterCornerDownRight.Contains(BinaryType))
         {
-            tile = wallDiagonalCornerUpRight;
+            tile = wallOuterCornerDownRight;
         }
 
-        else if (WallBytes.wallDiagonalCornerUpLeft.Contains(BinaryType))
+        else if (WallBytes.wallOuterCornerUpRight.Contains(BinaryType))
         {
-            tile = wallDiagonalCornerUpLeft;
+            tile = wallOuterCornerUpRight;
         }
 
-        else if (WallBytes.wallFullEightDirections.Contains(BinaryType))
+        else if (WallBytes.wallOuterCornerUpLeft.Contains(BinaryType))
         {
-            tile = wallBottom;
+            tile = wallOuterCornerUpLeft;
         }
-
-        else if (WallBytes.wallBottmEightDirections.Contains(BinaryType))
-        {
-            tile = wallMid;
-        }
-
 
         if (tile!= null)
-        {
-
+        { 
             CreateSingleTile(wallTilemap, tile, pos);
         }
     }

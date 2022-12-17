@@ -65,7 +65,7 @@ public static class WallGenerator
             }
             graphics.CreateCorridorBlock(pos, binaryBlocks);
         }
-        //ObjectHandler.get();
+
     }
 
         private static void CreateMainWalls(Graphics graphics, HashSet<Vector2Int> mainWallPos, HashSet<Vector2Int> groundPos)
@@ -115,7 +115,7 @@ public static class WallGenerator
             {
                 var nextTo = pos + direction;
                 var randomizer = Random.Range(0, 100);
-                if (groundPos.Contains(nextTo) == true && randomizer < 75)
+                if (groundPos.Contains(nextTo) == true && randomizer < 100)
                 {
                     blockPos.Add(nextTo);
                 }

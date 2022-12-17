@@ -12,7 +12,7 @@ public class TimeCountdown : MonoBehaviour
     public TMP_Text timeLeftTxt;
     float timeLeft;
     float spawnTimer = 0f;
-    float repeatTime = 1f;
+    float repeatTime = 0.1f;
     bool isActive = true;
 
     [SerializeField]
