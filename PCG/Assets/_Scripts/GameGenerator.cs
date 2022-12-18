@@ -44,12 +44,6 @@ public class GameGenerator : Layout
             centerOfRoom.Add((Vector2Int)Vector3Int.RoundToInt(room.center));
         }
 
-        List<Vector2Int> endOfCorridor = new List<Vector2Int>();
-        foreach (var room in listOfRooms)
-        {
-            endOfCorridor.Add((Vector2Int)Vector3Int.RoundToInt(room.center));
-        }
-
         Vector2 playerStartPos = centerOfRoom[0];
         Vector2 goalStartPos = centerOfRoom.Last();
         

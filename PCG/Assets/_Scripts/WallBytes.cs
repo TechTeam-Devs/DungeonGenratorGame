@@ -20,7 +20,7 @@ public static class WallBytes
         0b0001 //On wall position -- TOP 0 = NO -- RIGHT 0 = NO -- BOTTOM 0 = NO -- LEFT 1 = YES
     };
 
-    public static HashSet<int> wallBottm = new HashSet<int>
+    public static HashSet<int> wallBottom = new HashSet<int>
     {
         0b1000 //On wall position -- TOP 1 = YES -- RIGHT 0 = NO -- BOTTOM 0 = NO -- LEFT 0 = NO
     };
