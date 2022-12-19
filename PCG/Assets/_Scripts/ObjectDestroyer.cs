@@ -9,7 +9,7 @@ public class ObjectDestroyer : MonoBehaviour
         foreach (var gameObject in ObjectList)
         {
           
-            DestroyImmediate(gameObject);
+            Destroy(gameObject);
 
         }
     }
