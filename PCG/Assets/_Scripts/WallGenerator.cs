@@ -38,7 +38,7 @@ public static class WallGenerator
         }
     }
 
-        private static void CreateMainWalls(Graphics graphics, HashSet<Vector2Int> mainWallPos, HashSet<Vector2Int> groundPos)
+    private static void CreateMainWalls(Graphics graphics, HashSet<Vector2Int> mainWallPos, HashSet<Vector2Int> groundPos)
     {
         foreach (var pos in mainWallPos)
         {
@@ -85,12 +85,41 @@ public static class WallGenerator
             {
                 var nextTo = pos + direction;
                 var randomizer = Random.Range(0, 100);
-                if (groundPos.Contains(nextTo) == true && randomizer < 100)
+                if (groundPos.Contains(nextTo) == true && randomizer < 50)
                 {
                     blockPos.Add(nextTo);
                 }
             }
         }
         return blockPos;
+    }
+
+    public static void CreateBlocks(HashSet<Vector2Int> groundPos, Graphics graphics)
+    {
+        var blockPos = blockDirection(groundPos, Direction.diagonalDirectionList);
+        CreateBlocks(graphics, blockPos, groundPos);
+    }
+
+    private static void CreateBlocks(Graphics graphics, HashSet<Vector2Int> blockPos, HashSet<Vector2Int> groundPos)
+    {
+        foreach (var pos in blockPos)
+        {
+            string binaryBlocks = "";
+            foreach (var directions in Direction.allDirectionsList)
+            {
+                var neigherborPos = pos + directions;
+                if (groundPos.Contains(neigherborPos))
+                {
+                    binaryBlocks += "1";
+
+                }
+                else
+                {
+                    binaryBlocks += "0";
+
+                }
+            }
+            graphics.CreateCorridorBlock(pos, binaryBlocks);
+        }
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 namespace Cainos.PixelArtTopDown_Basic
 {
+    // Player control taken from https://assetstore.unity.com/packages/2d/environments/pixel-art-top-down-basic-187605
     public class TopDownCharacterController : MonoBehaviour
     {
         public float speed;

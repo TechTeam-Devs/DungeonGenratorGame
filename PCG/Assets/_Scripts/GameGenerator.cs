@@ -67,8 +67,8 @@ public class GameGenerator : Layout
         ground.UnionWith(corri);
 
         graphics.CreateGroundTiles(ground);
-        WallGenerator.CreateWalls(ground, graphics);
-   
+        WallGenerator.CreateWalls(ground, graphics); WallGenerator.CreateBlocks(ground, graphics);
+
     }
     private HashSet<Vector2Int> DynamicRoomLayoutGen(List<BoundsInt> list)
     {

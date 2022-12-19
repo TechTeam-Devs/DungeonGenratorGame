@@ -26,6 +26,7 @@ public class EnemyControl : MonoBehaviour
         maxY = transform.position.y + 2;
     }
 
+    // Enemy control taken from https://answers.unity.com/questions/355804/move-game-object-left-to-right-and-vice-verse.html
     void Update() 
     {
         transform.position = new Vector3(Mathf.PingPong(Time.time * 1, maxX - minX) + minX, Mathf.PingPong(Time.time * 3, maxY - minY) + minY, transform.position.z);
